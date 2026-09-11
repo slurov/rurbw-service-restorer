@@ -1,0 +1,63 @@
+# Секреты и переменные окружения
+.env
+.env.*
+*.env
+!.env.example
+credentials.*
+secrets.*
+*.pem
+*.key
+*.pfx
+*.p12
+
+# Отчёты, которые утилита сохраняет при тестах
+RuRBW_Report_*.txt
+services_before*.txt
+services_after*.txt
+*.report.txt
+
+# Локальные конфиги, заметки и черновики
+*.local.*
+*.local
+local/
+drafts/
+*.draft.*
+*.bak
+*.orig
+*.tmp
+
+# Логи и временные папки
+*.log
+temp/
+tmp/
+
+# Сборки и бинарники. В этом репозитории их быть не должно никогда:
+# «то же самое, но .exe» - типичная обёртка для скама
+bin/
+obj/
+out/
+*.exe
+*.dll
+*.pdb
+*.msi
+*.zip
+*.7z
+*.rar
+
+# Редакторы и IDE
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userprefs
+*.sln.docstates
+*.swp
+*~
+
+# Windows и macOS
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+.DS_Store

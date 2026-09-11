@@ -1,0 +1,9 @@
+# fix.ps1 хранится байт в байт: git не трогает BOM и переводы строк.
+# Иначе raw-ссылка отдавала бы не тот файл, который проверялся перед релизом,
+# а без BOM PowerShell 5.1 показывает кириллицу кракозябрами.
+*.ps1 -text
+
+*.md text eol=lf
+LICENSE text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
