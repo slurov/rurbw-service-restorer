@@ -13,8 +13,18 @@
       и в команде проверки хеша.
 - [ ] SHA256 в README совпадает с `Get-FileHash .\fix.ps1 -Algorithm SHA256`.
       Любая правка `fix.ps1` меняет хеш — пересчитать перед тегом.
-- [ ] Raw-ссылка отдаёт файл с BOM: первые три байта `EF BB BF`. Без него
-      PowerShell 5.1 покажет кириллицу кракозябрами.
+- [ ] В `fix.ps1` **нет** BOM: первые байты `3C 23` («<#»), а не `EF BB BF`.
+      С BOM запуск через `irm | iex` падает с «Missing argument in parameter list».
+- [ ] **Главная проверка перед каждым тегом** — разобрать файл ровно в том виде,
+      в каком его получает `iex`. Проверка ничего не запускает. В PowerShell:
+      ```powershell
+      $s = Invoke-RestMethod https://raw.githubusercontent.com/slurov/rurbw-service-restorer/main/fix.ps1
+      $e = $null
+      [System.Management.Automation.Language.Parser]::ParseInput($s, [ref]$null, [ref]$e) | Out-Null
+      $e.Count   # должно быть 0
+      ```
+      Проверка файла с диска (`ParseFile`, `Get-Content`) эту ошибку не ловит:
+      при чтении с диска PowerShell сам отбрасывает BOM.
 
 ## Повышение прав
 
@@ -133,5 +143,8 @@
 - [ ] Английская Windows: интерфейс остаётся русским, определение состояния
       не ломается (оно не парсит локализованный текст).
 - [ ] Запуск в PowerShell 7 (`pwsh`) — кто-нибудь обязательно попробует.
-- [ ] Файл скачан на диск и запущен как обычный скрипт — должен работать,
-      `$PSScriptRoot` нигде не используется.
+- [ ] Файл скачан на диск и запущен из админского cmd через
+      `powershell -NoProfile -ExecutionPolicy Bypass -Command "iex (Get-Content .\fix.ps1 -Raw -Encoding UTF8)"` —
+      должен работать, `$PSScriptRoot` нигде не используется.
+      Через `-File` запуск не поддерживается: без BOM Windows PowerShell 5.1
+      на русской Windows прочитает файл в 1251 и не разберёт его.

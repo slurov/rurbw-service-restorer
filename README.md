@@ -24,7 +24,7 @@
 Win+R, набрать `cmd`, Enter. Дальше вставить одну строку:
 
 ```
-powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/slurov/rurbw-service-restorer/v1.0.0/fix.ps1 | iex"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/slurov/rurbw-service-restorer/v1.0.1/fix.ps1 | iex"
 ```
 
 Windows спросит права администратора — нужно нажать «Да», без них служб
@@ -126,7 +126,7 @@ Windows спросит права администратора — нужно н
 и на Discord-сервере **discord.gg/rurbw**. Любой другой вариант команды —
 скам, даже если он выглядит похоже. В адресе должно быть ровно
 `raw.githubusercontent.com/slurov/rurbw-service-restorer/` и дальше номер
-версии, например `v1.0.0`.
+версии, например `v1.0.1`.
 
 «Улучшенная версия», «то же самое, но .exe», архив с паролем, файл из личных
 сообщений — тоже скам. Эта утилита никогда не просит скачать `.exe` и никогда
@@ -134,7 +134,7 @@ Windows спросит права администратора — нужно н
 
 ### Почему в ссылке номер версии, а не `main`
 
-Команда качает файл по тегу `v1.0.0`, а не из ветки `main`. Разница важная.
+Команда качает файл по тегу `v1.0.1`, а не из ветки `main`. Разница важная.
 
 Ветка `main` меняется с каждым коммитом: что лежит в ней сегодня, завтра может
 быть другим. Если бы команда смотрела в `main`, то один и тот же текст команды
@@ -142,7 +142,7 @@ Windows спросит права администратора — нужно н
 
 Тег указывает на одну конкретную версию файла. В репозитории включена защита
 тегов, поэтому подменить код под уже выпущенной версией задним числом нельзя:
-команда с `v1.0.0` всегда выполняет ровно тот файл, который вышел как `v1.0.0`.
+команда с `v1.0.1` всегда выполняет ровно тот файл, который вышел как `v1.0.1`.
 Новые версии выходят под новыми тегами.
 
 ## Как проверить самому
@@ -151,34 +151,38 @@ Windows спросит права администратора — нужно н
 
 ### Контрольная сумма
 
-SHA256 файла `fix.ps1` версии `v1.0.0`:
+SHA256 файла `fix.ps1` версии `v1.0.1`:
 
 ```
-5F21FE115E7531DA48BDA0B7EDCBFCB82115ECE05341E97D24E78B1D5678124D
+8F39D56FE1D28099B8E26807C8DA3F7BDBB0FB4A2C8D0020B76B60A1927BCEC1
 ```
 
-Скачать файл и посчитать хеш:
+Проверить можно из того же окна cmd, одной строкой. Файл скачается
+во временную папку, в конце выведется его хеш:
 
-```powershell
-Invoke-WebRequest https://raw.githubusercontent.com/slurov/rurbw-service-restorer/v1.0.0/fix.ps1 -OutFile fix.ps1 -UseBasicParsing
-Get-FileHash .\fix.ps1 -Algorithm SHA256
+```
+powershell -NoProfile -Command "Invoke-WebRequest https://raw.githubusercontent.com/slurov/rurbw-service-restorer/v1.0.1/fix.ps1 -OutFile $env:TEMP\rurbw-fix.ps1 -UseBasicParsing; (Get-FileHash $env:TEMP\rurbw-fix.ps1 -Algorithm SHA256).Hash"
 ```
 
 Хеш должен совпасть символ в символ. Та же сумма публикуется рядом с командой
 на rurbw.pro — сверяй с ней: если кто-то подменит файл, ему придётся подменить
 и сумму в двух независимых местах.
 
-Если хочешь запустить **именно проверенный файл**, запускай его из PowerShell,
-открытого от имени администратора:
+Если хочешь запустить **именно проверенный файл** — открой cmd от имени
+администратора и выполни:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\fix.ps1
+```
+powershell -NoProfile -ExecutionPolicy Bypass -Command "iex (Get-Content $env:TEMP\rurbw-fix.ps1 -Raw -Encoding UTF8)"
 ```
 
 Тогда утилите не нужно повышать права, и повторной загрузки не будет —
 выполнится ровно тот файл, хеш которого ты только что проверил. Если запустить
-его из обычного окна, утилита при запросе прав скачает себя заново по той же
-ссылке.
+из обычного окна, утилита при запросе прав скачает себя заново по той же ссылке.
+
+Не запускай файл через `-File` или «Выполнить с помощью PowerShell»: Windows
+PowerShell 5.1 прочитает его в кодировке системы, и на русской Windows скрипт
+не запустится. Файл специально сохранён без BOM — с ним ломается запуск через
+`irm | iex`, которым пользуются все остальные.
 
 ### Код и синтаксис
 
@@ -187,10 +191,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\fix.ps1
 того, что скрипт может и чего не может сделать с системой, —
 в [docs/security-review.md](docs/security-review.md).
 
-Проверить синтаксис, ничего не запуская:
+Проверить синтаксис, ничего не запуская (это уже в окне PowerShell, не cmd):
 
 ```powershell
-$code = Get-Content .\fix.ps1 -Raw
+$code = Get-Content .\fix.ps1 -Raw -Encoding UTF8
 $errors = $null
 [System.Management.Automation.PSParser]::Tokenize($code, [ref]$errors) | Out-Null
 $errors

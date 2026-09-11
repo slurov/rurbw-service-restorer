@@ -1,15 +1,18 @@
-﻿<#
+<#
     RuRBW Service Restorer
     Включает обратно системные службы Windows, которые вырубают «твикеры»,
     из-за чего на ScreenShare прилетает бан за Disabled Services.
 
     Проект : Russian Ranked Bedwars, rurbw.pro
     Автор  : @slurov
-    Версия : 1.0.0
+    Версия : 1.0.1
     Лицензия: MIT
 
     Запуск одной строкой в cmd:
-    powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/slurov/rurbw-service-restorer/v1.0.0/fix.ps1 | iex"
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/slurov/rurbw-service-restorer/v1.0.1/fix.ps1 | iex"
+
+    Запуск скачанного файла - из cmd, открытого от имени администратора:
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "iex (Get-Content .\fix.ps1 -Raw -Encoding UTF8)"
 
     Если проверяешь код перед запуском, смотри сюда. Во всём файле ровно семь
     команд, способных что-то изменить, найди их поиском и убедись, что других нет:
@@ -31,6 +34,13 @@
 
 # Скрипт запускается через `irm ... | iex`, файла на диске нет.
 # Поэтому здесь нет param(), #Requires, $PSScriptRoot и относительных путей.
+#
+# Файл сохранён в UTF-8 БЕЗ BOM, и добавлять BOM нельзя. irm превращает BOM
+# в невидимый символ U+FEFF в начале текста, он прилипает к «<#» в первой
+# строке, шапка перестаёт быть комментарием, и iex пытается выполнить её как код.
+# Кириллица без BOM не ломается: GitHub отдаёт файл с charset=utf-8.
+# По той же причине нельзя запускать файл через -File: Windows PowerShell 5.1
+# прочитает его в кодировке системы. Для запуска с диска - Get-Content -Encoding UTF8.
 
 $ErrorActionPreference = 'Stop'
 $ProgressPreference    = 'SilentlyContinue'
@@ -41,8 +51,8 @@ $ProgressPreference    = 'SilentlyContinue'
 # и однажды от администратора выполнился бы не тот код, который игрок читал.
 # Хеш коммита тут не подходит - файл не может содержать хеш коммита, в котором
 # сам лежит. Чтобы тег нельзя было передвинуть, в репозитории включена защита тегов.
-$SCRIPT_URL     = 'https://raw.githubusercontent.com/slurov/rurbw-service-restorer/v1.0.0/fix.ps1'
-$SCRIPT_VERSION = 'v1.0.0'
+$SCRIPT_URL     = 'https://raw.githubusercontent.com/slurov/rurbw-service-restorer/v1.0.1/fix.ps1'
+$SCRIPT_VERSION = 'v1.0.1'
 $DISCORD_URL    = 'https://discord.gg/rurbw'
 
 # Палитра тёмной темы.
