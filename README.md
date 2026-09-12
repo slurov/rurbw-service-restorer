@@ -15,7 +15,7 @@
 `Win+R` → `cmd` → Enter. Вставить одну строку:
 
 ```
-powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/slurov/rurbw-service-restorer/v1.0.2/fix.ps1 | iex"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/slurov/rurbw-service-restorer/v1.0.3/fix.ps1 | iex"
 ```
 
 Винда попросит права администратора — жми «Да». Без них службы не изменить, это ограничение самой Windows, а не утилиты.
@@ -91,14 +91,14 @@ $b64 = [regex]::Match($code, "IMG_LOGO36\s*=\s*'([^']+)'").Groups[1].Value
 
 Команда выполняет код с внешнего адреса с правами админа. Подменят ссылку — выполнят что угодно.
 
-Официальная команда есть только на rurbw.pro и в Discord — discord.gg/rurbw. Любой другой вариант скам, даже если выглядит один в один. В адресе должно быть ровно `raw.githubusercontent.com/slurov/rurbw-service-restorer/` и номер версии.
+Официальная команда есть только на rrbw.pro и в Discord — discord.gg/rurbw. Любой другой вариант скам, даже если выглядит один в один. В адресе должно быть ровно `raw.githubusercontent.com/slurov/rurbw-service-restorer/` и номер версии.
 
 «Улучшенная версия», «то же самое, но .exe», архив с паролем, файл в лс — тоже скам. Эта утилита не просит качать .exe и не просит отключать антивирус.
 
-Если умеешь считать SHA256 — вот сумма `fix.ps1` версии v1.0.2, она же продублирована на rurbw.pro:
+Если умеешь считать SHA256 — вот сумма `fix.ps1` версии v1.0.3, она же продублирована на rrbw.pro:
 
 ```
-C5981157C901780A40F59A0D9795EAEF7542D0A18353636CC0CA7B3A203581BE
+7955EBEC088BC22EC8305714DBAE0EE84ABA6CB914BC61F19025CC3ABB646FDA
 ```
 
 ## Почему в ссылке версия, а не main
@@ -119,7 +119,7 @@ C5981157C901780A40F59A0D9795EAEF7542D0A18353636CC0CA7B3A203581BE
 
 ## Автор
 
-@slurov, для Russian Ranked Bedwars — [rurbw.pro](https://rrbw.pro)
+@slurov, для Russian Ranked Bedwars — [rrbw.pro](https://rrbw.pro)
 
 Вопросы и баги: [discord.gg/rurbw](https://discord.gg/rurbw)
 

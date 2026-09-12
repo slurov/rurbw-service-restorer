@@ -3,13 +3,13 @@
     Включает обратно системные службы Windows, которые вырубают «твикеры»,
     из-за чего на ScreenShare прилетает бан за Disabled Services.
 
-    Проект : Russian Ranked Bedwars, rurbw.pro
+    Проект : Russian Ranked Bedwars, rrbw.pro
     Автор  : @slurov
-    Версия : 1.0.2
+    Версия : 1.0.3
     Лицензия: MIT
 
     Запуск одной строкой в cmd:
-    powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/slurov/rurbw-service-restorer/v1.0.2/fix.ps1 | iex"
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/slurov/rurbw-service-restorer/v1.0.3/fix.ps1 | iex"
 
     Запуск скачанного файла - из cmd, открытого от имени администратора:
     powershell -NoProfile -ExecutionPolicy Bypass -Command "iex (Get-Content .\fix.ps1 -Raw -Encoding UTF8)"
@@ -54,8 +54,8 @@ $ProgressPreference    = 'SilentlyContinue'
 # и однажды от администратора выполнился бы не тот код, который игрок читал.
 # Хеш коммита тут не подходит - файл не может содержать хеш коммита, в котором
 # сам лежит. Чтобы тег нельзя было передвинуть, в репозитории включена защита тегов.
-$SCRIPT_URL     = 'https://raw.githubusercontent.com/slurov/rurbw-service-restorer/v1.0.2/fix.ps1'
-$SCRIPT_VERSION = 'v1.0.2'
+$SCRIPT_URL     = 'https://raw.githubusercontent.com/slurov/rurbw-service-restorer/v1.0.3/fix.ps1'
+$SCRIPT_VERSION = 'v1.0.3'
 $DISCORD_URL    = 'https://discord.gg/rurbw'
 
 # Палитра тёмной темы.
@@ -763,7 +763,7 @@ function Export-Report {
     $lines.Add($thin)
     $lines.Add(' Утилита только включает службы Windows. Ничего не отключалось,')
     $lines.Add(' не удалялось и никуда не отправлялось.')
-    $lines.Add(' Russian Ranked Bedwars — rurbw.pro | by @slurov')
+    $lines.Add(' Russian Ranked Bedwars — rrbw.pro | by @slurov')
     $lines.Add($rule)
 
     Set-Content -LiteralPath $path -Value $lines -Encoding UTF8 -ErrorAction Stop
@@ -1229,7 +1229,7 @@ function Invoke-PaintTitleBar {
 function New-ChromeForm {
     param([int]$Width = 760, [int]$Height = 620)
     $form = New-Object System.Windows.Forms.Form
-    $form.Text            = 'RuRBW Service Restorer | rurbw.pro'
+    $form.Text            = 'RuRBW Service Restorer | rrbw.pro'
     $form.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::None
     $form.StartPosition   = [System.Windows.Forms.FormStartPosition]::CenterScreen
     $form.AutoScaleMode   = [System.Windows.Forms.AutoScaleMode]::None
