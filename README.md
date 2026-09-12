@@ -119,7 +119,7 @@ C5981157C901780A40F59A0D9795EAEF7542D0A18353636CC0CA7B3A203581BE
 
 ## Автор
 
-@slurov, для Russian Ranked Bedwars — [rurbw.pro](https://rurbw.pro)
+@slurov, для Russian Ranked Bedwars — [rurbw.pro](https://rrbw.pro)
 
 Вопросы и баги: [discord.gg/rurbw](https://discord.gg/rurbw)
 
